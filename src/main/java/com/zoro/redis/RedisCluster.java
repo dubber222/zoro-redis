@@ -2,6 +2,7 @@ package com.zoro.redis;
 
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisSentinelPool;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,6 +32,9 @@ public class RedisCluster {
         JedisCluster jedisCluster = new JedisCluster(nodes);
 
         jedisCluster.set("anan","beautifull!!");
+
+        //  sentinel 集群
+        //JedisSentinelPool jedisSentinelPool = new JedisSentinelPool()
     }
 
 }
