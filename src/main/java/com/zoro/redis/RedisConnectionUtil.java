@@ -16,10 +16,15 @@ public class RedisConnectionUtil {
 
     static {
         JedisPoolConfig config = new JedisPoolConfig();
-        jedisPool = new JedisPool(config, "192.168.116.12", 6379);
+        jedisPool = new JedisPool(config, "192.168.137.219", 6380);
     }
 
     public static Jedis getJedis() {
         return jedisPool.getResource();
+    }
+
+    public static void main(String[] args) {
+        Jedis jedis = RedisConnectionUtil.getJedis();
+        jedis.set("test","test");
     }
 }

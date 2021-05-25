@@ -24,8 +24,8 @@ public class Test implements Runnable {
                 System.out.println(Thread.currentThread().getName() + "->成功获得锁::" + identifier);
                 try {
                     Thread.sleep(1000);
-                    //distributeLockDemo.releaseLock("update", identifier);
-                    distributeLockDemo.releaseLockWithLua("update",identifier);
+                    distributeLockDemo.releaseLock("update", identifier);
+                    //distributeLockDemo.releaseLockWithLua("update",identifier);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

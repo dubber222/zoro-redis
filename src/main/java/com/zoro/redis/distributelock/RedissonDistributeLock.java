@@ -8,7 +8,7 @@ import org.redisson.config.Config;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Demo class
+ * Redisson 实现分布式锁
  *
  * @author dubber
  * @date 2018/10/9
@@ -19,12 +19,12 @@ public class RedissonDistributeLock {
 
         Config config = new Config();
         config.useSingleServer().setTimeout(1000000)
-                .setAddress("redis://192.168.116.12:6379");
+                .setAddress("redis://192.168.137.219:6380");
         RedissonClient redissonClient = Redisson.create(config);
 
         RLock rLock = redissonClient.getLock("update");
         try {
-            rLock.tryLock(100,10, TimeUnit.SECONDS);
+            rLock.tryLock(100, 10, TimeUnit.SECONDS);
             Thread.sleep(100);
             System.out.println("获得锁");
         } catch (InterruptedException e) {
