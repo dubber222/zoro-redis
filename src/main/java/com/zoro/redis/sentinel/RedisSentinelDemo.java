@@ -23,9 +23,9 @@ public class RedisSentinelDemo {
 
         //哨兵信息
         Set<String> sentinels = new HashSet<String>(Arrays.asList(
-                "192.168.137.219:26379",
-                "192.168.137.219:26380",
-                "192.168.137.219:26381"
+                "192.168.137.65:26380",
+                "192.168.137.65:26381",
+                "192.168.137.65:26382"
         ));
 
         //创建连接池
@@ -35,11 +35,12 @@ public class RedisSentinelDemo {
         JedisSentinelPool pool = new JedisSentinelPool("mymaster", sentinels, jedisPoolConfig);
 
         //获取客户端连接
-        Jedis jedis = pool.getResource();
-        //设置k1
-        jedis.set("k1", "v1");
-        String myvalue = jedis.get("k1");
-        //获取k1的值
-        System.out.println(myvalue);
+        try (Jedis jedis = pool.getResource();) {
+            //设置k1
+            jedis.set("k1", "v1");
+            String myvalue = jedis.get("k1");
+            //获取k1的值
+            System.out.println(myvalue);
+        }
     }
 }
