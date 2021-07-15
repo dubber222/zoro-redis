@@ -3,6 +3,7 @@ package com.zoro.redis;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.Protocol;
 
 /**
  * Demo class
@@ -16,7 +17,7 @@ public class RedisConnectionUtil {
 
     static {
         JedisPoolConfig config = new JedisPoolConfig();
-        jedisPool = new JedisPool(config, "192.168.137.65", 6380);
+        jedisPool = new JedisPool(config, "192.168.113.62", 6379);
     }
 
     public static Jedis getJedis() {

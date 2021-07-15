@@ -14,13 +14,31 @@ public class PipelineDemo {
     public static void main(String[] args) {
 
         Jedis jedis = RedisConnectionUtil.getJedis();
-        Pipeline pipeline = jedis.pipelined();
-        pipeline.set("a","1");
-        pipeline.set("b","2");
-        pipeline.set("c","3");
-        pipeline.set("d","4");
-
-        pipeline.sync();
+        new PipelineDemo().normal(jedis);
+        //new PipelineDemo().pipeline(jedis);
     }
+
+    public void normal(Jedis jedis){
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 100000; i++) {
+            jedis.set("333" +i, String.valueOf(i));
+        }
+
+        System.out.println(System.currentTimeMillis() - start);
+    }
+
+    public void pipeline(Jedis jedis){
+        Pipeline pipeline = jedis.pipelined();
+        long start = System.currentTimeMillis();
+        pipeline.multi();
+        for (int i = 0; i < 100000; i++) {
+            pipeline.set("333" +i, String.valueOf(i));
+        }
+        pipeline.exec();
+        System.out.println(System.currentTimeMillis() - start);
+    }
+
+
+
 }
 

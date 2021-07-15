@@ -1,6 +1,8 @@
 package com.zoro.redis;
 
+import com.google.common.hash.BloomFilter;
 import org.redisson.Redisson;
+import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 
@@ -10,7 +12,7 @@ import org.redisson.config.Config;
  * @author dubber
  * @date 2018/10/1
  */
-public class RedissonCluster {
+public class BloomFilterTest {
 
     public static void main(String[] args) {
 
@@ -25,11 +27,12 @@ public class RedissonCluster {
                         );
         RedissonClient redissonClient = Redisson.create(config);
 
-
-        redissonClient.getBucket("zoro").set("ana");
-
-
-        System.out.println(redissonClient.getBucket("zoro").get());
+        RBloomFilter<String> bloom = redissonClient.getBloomFilter("a");
+        // 初始化布隆过滤器， 预计元素 1000000，误差0.03
+        bloom.tryInit(1000000,0.03);
+        bloom.add("abc");
+        System.out.println(bloom.contains("abc"));
+        System.out.println(bloom.contains("123"));
 
         redissonClient.shutdown();
     }
